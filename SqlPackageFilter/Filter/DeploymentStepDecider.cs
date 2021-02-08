@@ -8,7 +8,7 @@ namespace AgileSqlClub.SqlPackageFilter.Filter
   {
     public static DeploymentStepDecision Decide(DeploymentStep step, KeeperDecider decider)
     {
-      return RemoveCreateElement(step, decider) ?? RemoveDropStep(step, decider) ?? RemoveAlterStep(step, decider) ?? RemoveDataLossCheckStep(step, decider);
+      return RemoveCreateElement(step, decider) ?? RemoveDropStep(step, decider) ?? RemoveAlterStep(step, decider) ?? ModifyDatabaseStep(step, decider) ?? RemoveDataLossCheckStep(step, decider);
     }
 
     private static DeploymentStepDecision RemoveDataLossCheckStep(DeploymentStep step, KeeperDecider decider)
@@ -55,6 +55,17 @@ namespace AgileSqlClub.SqlPackageFilter.Filter
         StepType = StepType.Create,
         ObjectName = createStep.SourceElement?.Name?.ToString() ?? ""
       };
+    }
+
+    private static DeploymentStepDecision ModifyDatabaseStep(DeploymentStep step, KeeperDecider decider)
+    {
+        var dbcc = new ModifyDatabaseCheckStep(step);
+        return !dbcc.IsDatabaseChange ? null : new DeploymentStepDecision()
+        {
+            Remove = decider.ShouldRemoveFromPlan(dbcc.SettingName, ModelSchema.DatabaseOptions, StepType.Alter),
+            StepType = StepType.Alter,
+            ObjectName = dbcc.SettingName.ToString()
+        };
     }
   }
 }

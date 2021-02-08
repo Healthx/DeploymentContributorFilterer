@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AgileSqlClub.SqlPackageFilter.IntegrationTests</RootNamespace>
     <AssemblyName>AgileSqlClub.SqlPackageFilter.IntegrationTests</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
@@ -33,10 +33,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="nunit.framework, Version=3.4.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
-      <HintPath>..\packages\NUnit.3.4.1\lib\net45\nunit.framework.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -60,10 +56,29 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="DacPac.dacpac">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="packages.config" />
-    <None Include="SqlPackage.exe\sqlpackage.exe.config">
+  </ItemGroup>
+  
+  <!-- This next section is intentionally commented out as VS 2019 keeps expanding it from the dynamic file pickup to hard coded list.  Leaving this here so that the hard-coded list can easily be replaced by the dynamic block when needed  -->
+  <!--
+  <ItemGroup>
+    <SqlPackageFiles Include="C:\Program Files\Microsoft SQL Server\150\DAC\bin\**\*" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="@(SqlPackageFiles)">
+      <Link>SqlPackage.exe\%(RecursiveDir)%(FileName)%(Extension)</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  -->
+  
+  <ItemGroup>
+    <SqlPackageFiles Include="C:\Program Files\Microsoft SQL Server\150\DAC\bin\**\*" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="@(SqlPackageFiles)">
+      <Link>SqlPackage.exe\%(RecursiveDir)%(FileName)%(Extension)</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
@@ -77,52 +92,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="SqlPackage.exe\dacunpack.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="SqlPackage.exe\Microsoft.Data.Tools.Components.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="SqlPackage.exe\Microsoft.Data.Tools.Contracts.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="SqlPackage.exe\Microsoft.Data.Tools.Schema.Sql.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="SqlPackage.exe\Microsoft.Data.Tools.Schema.Tasks.Sql.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="SqlPackage.exe\Microsoft.Data.Tools.Schema.Utilities.Sql.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="SqlPackage.exe\Microsoft.Data.Tools.Utilities.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="SqlPackage.exe\Microsoft.SqlServer.ConnectionInfo.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="SqlPackage.exe\Microsoft.SqlServer.Dac.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="SqlPackage.exe\Microsoft.SqlServer.Dac.Extensions.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="SqlPackage.exe\Microsoft.SqlServer.Dac.Extensions.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="SqlPackage.exe\Microsoft.SqlServer.Dac.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="SqlPackage.exe\Microsoft.SqlServer.SqlClrProvider.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="SqlPackage.exe\Microsoft.SqlServer.TransactSql.ScriptDom.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="SqlPackage.exe\sqlpackage.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <PackageReference Include="NUnit">
+      <Version>3.13.0</Version>
+    </PackageReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
@@ -132,13 +106,12 @@
   </Target>
   -->
   <Target Name="AfterBuild">
-    <Copy SourceFiles="$(OutputPath)AgileSqlClub.SqlPackageFilter.dll" DestinationFolder="$(OutputPath)SqlPackage.exe" />
+    <Copy SourceFiles="$(OutputPath)AgileSqlClub.SqlPackageFilter.dll" DestinationFolder="$(OutputPath)SqlPackage.exe\Extensions\" />
   </Target>
-  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  <Target Name="AfterClean">
+    <ItemGroup>
+      <_CustomFolderToDelete Include="$(OutputPath)"/>
+    </ItemGroup>
+    <RemoveDir Directories="@(_CustomFolderToDelete)"/>
   </Target>
 </Project>

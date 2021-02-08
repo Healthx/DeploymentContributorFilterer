@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Threading;
 using AgileSqlClub.SqlPackageFilter.Config;
 using AgileSqlClub.SqlPackageFilter.Rules;
 using Microsoft.SqlServer.Dac.Deployment;
@@ -29,7 +30,8 @@ namespace AgileSqlClub.SqlPackageFilter.Filter
     }
 
     protected override void OnExecute(DeploymentPlanContributorContext context)
-    {            
+    {
+        Thread.Sleep(15000);
       try
       {
 
@@ -46,6 +48,8 @@ namespace AgileSqlClub.SqlPackageFilter.Filter
 
           var current = next;
           next = current.Next;
+
+          Console.WriteLine($"Step: {current}");
 
           var stepDecider = DeploymentStepDecider.Decide(current, decider);
 

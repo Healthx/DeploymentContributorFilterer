@@ -1,10 +1,10 @@
-using System.Text.RegularExpressions;
 using Microsoft.SqlServer.Dac.Deployment;
 using Microsoft.SqlServer.Dac.Model;
+using System.Text.RegularExpressions;
 
 namespace AgileSqlClub.SqlPackageFilter.Filter
 {
-  internal class DataLossCheckStep
+    internal class DataLossCheckStep
   {
     public bool IsDataLossCheck => ObjectName != null;
     public ObjectIdentifier ObjectName { get; private set; }
