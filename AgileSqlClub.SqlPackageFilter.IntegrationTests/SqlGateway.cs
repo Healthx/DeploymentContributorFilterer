@@ -6,9 +6,18 @@ namespace AgileSqlClub.SqlPackageFilter.IntegrationTests
     {
         private readonly  string _connectionString;
 
+        public readonly string dbServer;
+
+        public readonly string dbName;
+
         public SqlGateway(string connectionString)
         {
             _connectionString = connectionString;
+            var dbParts = new SqlConnectionStringBuilder(_connectionString);
+
+
+            dbServer = dbParts.DataSource;
+            dbName = dbParts.InitialCatalog;
         }
 
         public void RunQuery(string query)

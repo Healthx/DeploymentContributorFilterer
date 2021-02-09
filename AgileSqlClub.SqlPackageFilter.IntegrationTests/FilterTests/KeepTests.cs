@@ -17,8 +17,8 @@ namespace AgileSqlClub.SqlPackageFilter.IntegrationTests
             Assert.AreEqual(1, count);
 
             var args =
-                $"/Action:Publish /TargetServerName:(localdb)\\Filter /SourceFile:{Path.Combine(TestContext.CurrentContext.TestDirectory, "Dacpac.Dacpac")} /p:AdditionalDeploymentContributors=AgileSqlClub.DeploymentFilterContributor " + 
-                " /TargetDatabaseName:Filters /p:DropObjectsNotInSource=True " +
+                $"/Action:Publish /TargetServerName:{_gateway.dbServer} /SourceFile:{Path.Combine(TestContext.CurrentContext.TestDirectory, "Dacpac.Dacpac")} /p:AdditionalDeploymentContributors=AgileSqlClub.DeploymentFilterContributor " + 
+                $" /TargetDatabaseName:{_gateway.dbName} /p:DropObjectsNotInSource=True " +
                 "/p:AdditionalDeploymentContributorArguments=\"SqlPackageFilter=KeepName(ohwahweewah)\" /p:AllowIncompatiblePlatform=true";
 
             var proc = new ProcessGateway( Path.Combine(TestContext.CurrentContext.TestDirectory,   "SqlPackage.exe\\SqlPackage.exe"), args);
@@ -42,8 +42,8 @@ namespace AgileSqlClub.SqlPackageFilter.IntegrationTests
             Assert.AreEqual(1, count);
 
             var args =
-                $"/Action:Publish /TargetServerName:(localdb)\\Filter /SourceFile:{Path.Combine(TestContext.CurrentContext.TestDirectory, "Dacpac.Dacpac")} /p:AdditionalDeploymentContributors=AgileSqlClub.DeploymentFilterContributor " +
-                " /TargetDatabaseName:Filters /p:DropObjectsNotInSource=True " +
+                $"/Action:Publish /TargetServerName:{_gateway.dbServer} /SourceFile:{Path.Combine(TestContext.CurrentContext.TestDirectory, "Dacpac.Dacpac")} /p:AdditionalDeploymentContributors=AgileSqlClub.DeploymentFilterContributor " +
+                $" /TargetDatabaseName:{_gateway.dbName} /p:DropObjectsNotInSource=True " +
                 "/p:AdditionalDeploymentContributorArguments=\"SqlPackageFilter=KeepSchema(ohwahweewah)\" /p:AllowIncompatiblePlatform=true";
 
             var proc = new ProcessGateway( Path.Combine(TestContext.CurrentContext.TestDirectory,   "SqlPackage.exe\\SqlPackage.exe"), args);
@@ -69,8 +69,8 @@ namespace AgileSqlClub.SqlPackageFilter.IntegrationTests
             Assert.AreEqual(1, count);
 
             var args =
-                $"/Action:Publish /TargetServerName:(localdb)\\Filter /SourceFile:{Path.Combine(TestContext.CurrentContext.TestDirectory, "Dacpac.Dacpac")} /p:AdditionalDeploymentContributors=AgileSqlClub.DeploymentFilterContributor " +
-                " /TargetDatabaseName:Filters /p:DropObjectsNotInSource=True " +
+                $"/Action:Publish /TargetServerName:{_gateway.dbServer} /SourceFile:{Path.Combine(TestContext.CurrentContext.TestDirectory, "Dacpac.Dacpac")} /p:AdditionalDeploymentContributors=AgileSqlClub.DeploymentFilterContributor " +
+                $" /TargetDatabaseName:{_gateway.dbName} /p:DropObjectsNotInSource=True " +
                 "/p:AdditionalDeploymentContributorArguments=\"SqlPackageFilter=KeepType(ScalarFunction)\" /p:AllowIncompatiblePlatform=true";
 
             var proc = new ProcessGateway( Path.Combine(TestContext.CurrentContext.TestDirectory,   "SqlPackage.exe\\SqlPackage.exe"), args);

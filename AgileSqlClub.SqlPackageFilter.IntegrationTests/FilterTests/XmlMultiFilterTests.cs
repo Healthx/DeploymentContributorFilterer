@@ -44,8 +44,8 @@ namespace AgileSqlClub.SqlPackageFilter.IntegrationTests
         //    sr.Dispose();
 
         //    var args = string.Format(
-        //        $"/Action:Publish /TargetServerName:(localdb)\\Filter /SourceFile:{Path.Combine(TestContext.CurrentContext.TestDirectory, "Dacpac.Dacpac")} /p:AdditionalDeploymentContributors=AgileSqlClub.DeploymentFilterContributor " +
-        //        " /TargetDatabaseName:Filters /p:DropObjectsNotInSource=True " +
+        //        $"/Action:Publish /TargetServerName:{_gateway.dbServer} /SourceFile:{Path.Combine(TestContext.CurrentContext.TestDirectory, "Dacpac.Dacpac")} /p:AdditionalDeploymentContributors=AgileSqlClub.DeploymentFilterContributor " +
+        //        $" /TargetDatabaseName:{_gateway.dbName} /p:DropObjectsNotInSource=True " +
         //        "/p:AdditionalDeploymentContributorArguments=SqlPackageLogging=Info;\"SqlPackageXmlFilterFile={0}\" /p:AllowIncompatiblePlatform=true", xmlFile);
 
         //    var proc = new ProcessGateway( Path.Combine(TestContext.CurrentContext.TestDirectory,   "SqlPackage.exe\\SqlPackage.exe"), args);

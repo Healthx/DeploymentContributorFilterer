@@ -70,16 +70,17 @@ namespace AgileSqlClub.SqlPackageFilter.Config
             }
             
 
-            List<string> options = value.Trim(new[] { '(', ')', ' ' }).Split(',').Select(val => val.Trim()).ToList<string>();
-            string match = options[0];
-            options.RemoveAt(0);
+            List<string> options = value.Trim(new[] { '(', ')', ' ' }).Split(MultiPartNamedObjectFilterRule.Separator).Select(val => val.Trim()).ToList<string>();
 
-            if (type == FilterType.Name && match.IndexOf(MultiPartNamedObjectFilterRule.Separator) != -1)
+            if (type == FilterType.Name && options.Count > 1)
             {
                 // Argument has commas. Assume this is a request to match a multipart name.
                 type = FilterType.MultiPartName;
             }
-            
+
+            string match = options[0];
+            options.RemoveAt(0);
+
 
             var definiton = new RuleDefinition()
             {
