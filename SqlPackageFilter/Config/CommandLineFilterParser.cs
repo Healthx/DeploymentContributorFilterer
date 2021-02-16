@@ -45,17 +45,17 @@ namespace AgileSqlClub.SqlPackageFilter.Config
                     remove = 13;
                     break;
                 case FilterType.Security:
-                {
-                    return new RuleDefinition()
                     {
-                        Operation = operation,
-                        FilterType = FilterType.Type,
-                        Match = SecurityFilterMatch,
-                        MatchType = MatchType.DoesMatch,
-                        Options = null
-                    };      
-                }
-                    
+                        return new RuleDefinition()
+                        {
+                            Operation = operation,
+                            FilterType = FilterType.Type,
+                            Match = SecurityFilterMatch,
+                            MatchType = MatchType.DoesMatch,
+                            Options = null
+                        };
+                    }
+
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -68,7 +68,7 @@ namespace AgileSqlClub.SqlPackageFilter.Config
                 matchType = MatchType.DoesNotMatch;
                 value = value.Substring(1).Trim();
             }
-            
+
 
             List<string> options = value.Trim(new[] { '(', ')', ' ' }).Split(MultiPartNamedObjectFilterRule.Separator).Select(val => val.Trim()).ToList<string>();
 
@@ -100,7 +100,7 @@ namespace AgileSqlClub.SqlPackageFilter.Config
             {
                 return FilterType.Schema;
             }
-            
+
             if (value.StartsWith("Name", StringComparison.OrdinalIgnoreCase))
             {
                 return FilterType.Name;

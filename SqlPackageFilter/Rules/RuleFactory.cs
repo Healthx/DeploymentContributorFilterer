@@ -7,13 +7,13 @@ namespace AgileSqlClub.SqlPackageFilter.Rules
     {
         public List<FilterRule> BuildRules(string filters)
         {
-            throw new NotImplementedException();            
+            throw new NotImplementedException();
         }
 
 
         public void t()
         {
-            
+
             /*
             string filter
 

@@ -12,7 +12,7 @@ namespace AgileSqlClub.SqlPackageFilter.Filter
 {
     class ModifyDatabaseCheckStep
     {
-        public bool IsDatabaseChange { get; }
+        public bool IsDatabaseModify { get; }
 
         public ObjectIdentifier SettingName { get; private set; }
 
@@ -20,7 +20,7 @@ namespace AgileSqlClub.SqlPackageFilter.Filter
         {
             var scriptStep = step as DeploymentScriptStep;
 
-            IsDatabaseChange = false;
+            IsDatabaseModify = false;
 
             var scriptLines = scriptStep?.GenerateTSQL();
             var script = scriptLines != null && scriptLines.Count > 0 ? scriptLines[0] : "";
@@ -36,9 +36,9 @@ namespace AgileSqlClub.SqlPackageFilter.Filter
                 script = sw.ToString();
 
                 var match = Regex.Match(script, @"BEGIN[\s\S]*?ALTER\s*DATABASE\s*\[.*\][\s\S]*?SET\s*RECOVERY\s*.*");
-                
-                IsDatabaseChange = match.Success;
-                SettingName = match.Success ? ObjectIdentifierFactory.Create("RECOVERY") : null;
+
+                IsDatabaseModify = match.Success;
+                SettingName = match.Success ? ObjectIdentifierFactory.Create("DatabaseOptions.RECOVERY") : null;
             }
         }
     }

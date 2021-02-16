@@ -1,4 +1,5 @@
-﻿using AgileSqlClub.SqlPackageFilter.Config;
+﻿using System;
+using AgileSqlClub.SqlPackageFilter.Config;
 using AgileSqlClub.SqlPackageFilter.Filter;
 using NUnit.Framework;
 
@@ -102,6 +103,26 @@ namespace AgileSqlClub.SqlPackageFilter.UnitTests.Config
             Assert.AreEqual(MatchType.DoesNotMatch ,definition.MatchType);
             Assert.AreEqual("[a-zA-Z]99.*", definition.Match);
         }
-        
+
+        [Test]
+        public void Parses_Invalid_FilterOperation()
+        {
+            var parser = new CommandLineFilterParser(_handler);
+
+            Assert.Throws(Is.TypeOf<ArgumentException>()
+                .And.Message.Contains("Could not get filter operation, either Ignore or Keep from: "),
+                () => parser.GetDefinitions("FakeFilter([a-zA-Z]99.*)"));
+        }
+
+        [Test]
+        public void Parses_Invalid_FilterType()
+        {
+            var parser = new CommandLineFilterParser(_handler);
+
+            Assert.Throws(Is.TypeOf<ArgumentException>()
+                    .And.Message.Contains("Could not get filter type, either Schema, Name or Type from: "),
+                () => parser.GetDefinitions("KeepFakeType([a-zA-Z]99.*)"));
+        }
+
     }
 }

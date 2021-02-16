@@ -48,5 +48,20 @@ namespace AgileSqlClub.SqlPackageFilter.IntegrationTests
                 }
             }
         }
+
+        public T GetValue<T>(string query)
+        {
+            using (var con = new SqlConnection(_connectionString))
+            {
+                con.Open();
+
+                using (var cmd = con.CreateCommand())
+                {
+                    cmd.CommandText = query;
+                    var result = cmd.ExecuteScalar();
+                    return (T)result;
+                }
+            }
+        }
     }
 }

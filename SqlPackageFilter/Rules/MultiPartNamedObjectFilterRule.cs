@@ -35,7 +35,7 @@ namespace AgileSqlClub.SqlPackageFilter.Rules
                     break;
                 }
             }
-            
+
             if (matches && MatchType == MatchType.DoesMatch)
                 return true;
 

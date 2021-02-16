@@ -9,7 +9,7 @@ namespace AgileSqlClub.SqlPackageFilter.VersionExecutor
     {
         protected override void OnExecute(DeploymentPlanContributorContext context)
         {
-            
+
         }
 
         protected override void OnApplyDeploymentConfiguration(DeploymentContributorContext context, ICollection<DeploymentContributorConfigurationStream> configurationStreams)

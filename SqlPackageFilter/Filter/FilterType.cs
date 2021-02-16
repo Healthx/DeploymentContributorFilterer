@@ -7,7 +7,6 @@
         Type,
         TableColumns,
         Security,    //Pseudo FilterType - All ObjectTypes that are security things
-        MultiPartName,
-        DatabaseOptions
+        MultiPartName
     }
 }

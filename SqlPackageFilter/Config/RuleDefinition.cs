@@ -13,5 +13,5 @@ namespace AgileSqlClub.SqlPackageFilter.Config
     }
 
 
-    
+
 }

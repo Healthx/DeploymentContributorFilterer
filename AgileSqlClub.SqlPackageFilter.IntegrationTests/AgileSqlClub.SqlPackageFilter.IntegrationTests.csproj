@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="FilterTests\IgnoreTests.cs" />
     <Compile Include="FilterTests\KeepColumnsTests.cs" />
+    <Compile Include="FilterTests\KeepDatabaseOptionsTests.cs" />
     <Compile Include="FilterTests\KeepTests.cs" />
     <Compile Include="Path\CopyDll.cs" />
     <Compile Include="ProcessGateway.cs" />
@@ -59,7 +60,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  
   <!-- This next section is intentionally commented out as VS 2019 keeps expanding it from the dynamic file pickup to hard coded list.  Leaving this here so that the hard-coded list can easily be replaced by the dynamic block when needed  -->
   <!--
   <ItemGroup>
@@ -72,7 +72,6 @@
     </None>
   </ItemGroup>
   -->
-  
   <ItemGroup>
     <SqlPackageFiles Include="C:\Program Files\Microsoft SQL Server\150\DAC\bin\**\*" />
   </ItemGroup>
@@ -110,8 +109,8 @@
   </Target>
   <Target Name="AfterClean">
     <ItemGroup>
-      <_CustomFolderToDelete Include="$(OutputPath)"/>
+      <_CustomFolderToDelete Include="$(OutputPath)" />
     </ItemGroup>
-    <RemoveDir Directories="@(_CustomFolderToDelete)"/>
+    <RemoveDir Directories="@(_CustomFolderToDelete)" />
   </Target>
 </Project>

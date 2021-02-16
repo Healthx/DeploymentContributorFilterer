@@ -38,7 +38,7 @@ namespace AgileSqlClub.SqlPackageFilter.Rules
             foreach (var rule in _rules)
             {
                 var operation = rule.Operation();
-                
+
                 if (operation == FilterOperation.Ignore && rule.Matches(name, objectType))
                 {
                     return true;
@@ -49,12 +49,12 @@ namespace AgileSqlClub.SqlPackageFilter.Rules
                     return true;
                 }
 
-                if (operation == FilterOperation.Keep && stepType == StepType.Alter  && rule.Matches(name, objectType, step))  
+                if (operation == FilterOperation.Keep && stepType == StepType.Alter && rule.Matches(name, objectType, step))
                 {
                     return true;
                 }
             }
-            
+
             return false;
         }
     }

@@ -22,7 +22,7 @@ namespace AgileSqlClub.SqlPackageFilter.Config
 
         public IEnumerable<RuleDefinition> GetDefinitions(string path)
         {
-        
+
             var definitions = new List<RuleDefinition>();
 
             XDocument doc = null;
@@ -36,7 +36,7 @@ namespace AgileSqlClub.SqlPackageFilter.Config
                 _messageHandler.ShowMessage(string.Format("Error parsing Xml Filter File: {0}", e.Message), DisplayMessageLevel.Errors);
                 return definitions;
             }
-            
+
             foreach (var node in doc.XPathSelectElements("//Filter"))
             {
                 var ruleDefinition = new RuleDefinition();
@@ -62,12 +62,12 @@ namespace AgileSqlClub.SqlPackageFilter.Config
                     continue;
                 }
 
-                if(!Enum.TryParse(type.Value, true, out ruleDefinition.FilterType))
+                if (!Enum.TryParse(type.Value, true, out ruleDefinition.FilterType))
                 {
                     _messageHandler.ShowMessage(string.Format("Found Filter in Xml: but Type attribute not understood: \"{0}\"", type.Value), DisplayMessageLevel.Errors);
                     continue;
                 }
-                
+
 
                 var matchType = node.Attribute("MatchType");
                 if (matchType == null)
@@ -75,7 +75,7 @@ namespace AgileSqlClub.SqlPackageFilter.Config
                     _messageHandler.ShowMessage("Error getting filter from xml: Type MatchType was not specified", DisplayMessageLevel.Errors);
                     continue;
                 }
-                
+
                 if (!Enum.TryParse(matchType.Value, true, out ruleDefinition.MatchType))
                 {
                     _messageHandler.ShowMessage(string.Format("Found Filter in Xml: but MatchType attribute not understood: \"{0}\"", matchType.Value), DisplayMessageLevel.Errors);
@@ -112,7 +112,7 @@ namespace AgileSqlClub.SqlPackageFilter.Config
                         MatchType = MatchType.DoesMatch //TODO: dup code between this and command line parser - unite them!
                     };
                 }
-                
+
                 definitions.Add(ruleDefinition);
             }
 
